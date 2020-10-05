@@ -113,27 +113,33 @@ margin: auto;
 </div>
 </center>
 <script>
+function addElement(parentId, elementId, str) {
+    var p = document.getElementById(parentId);
+p.innerHTML += "<div class=\"water\"" + " id="+ "\"" + count + "\"" + ">" + str + "</div>";
+}
+function removeElement(elementId){
+  var element = document.getElementById(elementId);
+  element.parentNode.removeChild(element);
+}
+var count = 0;
 function validateForm() {
-if(typeof(Storage) !== "undefined") {
-    if (sessionStorage.clickcount) {
-      sessionStorage.clickcount = Number(sessionStorage.clickcount)+1;
-    } else {
-      sessionStorage.clickcount = 1;
-    }
-    if(sessionStorage.clickcount > 5)
-    {
-      alert("Overflow");
-      return false;
-    }
-  } 
-var str = document.forms["myForm"]["fname"].value;
-  document.getElementById("stack").innerHTML += "<div class=\"water\"" + " id="+ "\"" + sessionStorage.clickCount + "\"" + ">" + str + "</div>";
+ count++;
+ if(count > 5)
+ { count=5;
+   alert("Overflow");
+   return false;
+ }
+  var str = document.forms["myForm"]["fname"].value;
+  addElement('stack',count,str);
   return false;
 }
 function pop(){
-      var val = (sessionStorage.getItem("clickcount"));
-      alert(val);
-      document.getElementById(val).remove();
+      if(count == 0){
+      alert("Underflow");
+      return false;
+      }
+      removeElement(count);
+      count--;
       return false;
 }
 </script>
